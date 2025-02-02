@@ -14,6 +14,7 @@ int main()
 
   InitWindow(screenWidth, screenHeight, title.c_str());
   SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
+  //ToggleFullscreen();
   SetExitKey(0);
 
   auto entityManager = EntityManager();
@@ -30,11 +31,15 @@ int main()
   auto * camera = new Camera2D();
   auto * dynamicCamera = new DynamicCamera(camera, player);
   camera->target = player->getEntityData()->position.toRayVector();
-  camera->zoom = 10.0f;
+  camera->zoom = 7.0f;
   player->setCamera(camera);
 
   while (!WindowShouldClose())
   {
+    if (IsKeyPressed(KEY_F1))
+    {
+      ToggleFullscreen();
+    }
     BeginDrawing();
     ClearBackground(YELLOW);
     dynamicCamera->update();
