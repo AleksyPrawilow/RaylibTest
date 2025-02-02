@@ -14,6 +14,4 @@ public:
   void update(float delta) override;
 };
 
-
-
 #endif //ASTRONAUT_H
