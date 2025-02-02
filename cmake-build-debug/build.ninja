@@ -84,6 +84,13 @@ build CMakeFiles/Test.dir/src/Astronaut.cpp.o: CXX_COMPILER__Test_unscanned_Debu
   OBJECT_DIR = CMakeFiles/Test.dir
   OBJECT_FILE_DIR = CMakeFiles/Test.dir/src
 
+build CMakeFiles/Test.dir/src/DynamicCamera.cpp.o: CXX_COMPILER__Test_unscanned_Debug /Users/alexeypravilov/Documents/C++/Raylib/Test/src/DynamicCamera.cpp || cmake_object_order_depends_target_Test
+  DEP_FILE = CMakeFiles/Test.dir/src/DynamicCamera.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics -I/opt/homebrew/Cellar/raylib/5.5/include
+  INCLUDES = -isystem /opt/homebrew/Cellar/raylib/5.5/include
+  OBJECT_DIR = CMakeFiles/Test.dir
+  OBJECT_FILE_DIR = CMakeFiles/Test.dir/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Test
@@ -92,7 +99,7 @@ build CMakeFiles/Test.dir/src/Astronaut.cpp.o: CXX_COMPILER__Test_unscanned_Debu
 #############################################
 # Link the executable Test
 
-build Test: CXX_EXECUTABLE_LINKER__Test_Debug CMakeFiles/Test.dir/src/main.cpp.o CMakeFiles/Test.dir/src/Structures.cpp.o CMakeFiles/Test.dir/src/EntityManager.cpp.o CMakeFiles/Test.dir/src/Entity.cpp.o CMakeFiles/Test.dir/src/Astronaut.cpp.o | /opt/homebrew/Cellar/raylib/5.5/lib/libraylib.dylib
+build Test: CXX_EXECUTABLE_LINKER__Test_Debug CMakeFiles/Test.dir/src/main.cpp.o CMakeFiles/Test.dir/src/Structures.cpp.o CMakeFiles/Test.dir/src/EntityManager.cpp.o CMakeFiles/Test.dir/src/Entity.cpp.o CMakeFiles/Test.dir/src/Astronaut.cpp.o CMakeFiles/Test.dir/src/DynamicCamera.cpp.o | /opt/homebrew/Cellar/raylib/5.5/lib/libraylib.dylib
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = /opt/homebrew/Cellar/raylib/5.5/lib/libraylib.dylib  -L/opt/homebrew/Cellar/raylib/5.5/lib -lraylib
   OBJECT_DIR = CMakeFiles/Test.dir

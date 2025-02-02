@@ -13,6 +13,8 @@ add_executable(Test src/main.cpp
         src/Entity.cpp
         include/Entity.h
         src/Astronaut.cpp
-        include/Astronaut.h)
+        include/Astronaut.h
+        src/DynamicCamera.cpp
+        include/DynamicCamera.h)
 
 target_link_libraries(Test raylib)
