@@ -15,5 +15,5 @@ DynamicCamera::~DynamicCamera()=default;
 void DynamicCamera::update()
 {
   camera->target = target->getPositionRay();
-  camera->offset = Vector2(1280 -(GetMousePosition().x + 1280 / 2) / 2, 720 -(GetMousePosition().y + 720 / 2) / 2);
+  camera->offset = Vector2(1280 -(GetMousePosition().x + 640) / 2, 720 -(GetMousePosition().y + 360) / 2);
 }
