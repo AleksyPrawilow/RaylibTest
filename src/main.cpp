@@ -6,6 +6,8 @@
 
 int main()
 {
+  ChangeDirectory(GetApplicationDirectory());
+
   constexpr int screenWidth = 1280;
   constexpr int screenHeight = 720;
   constexpr std::string title = "Test Game";
@@ -16,7 +18,7 @@ int main()
 
   auto entityManager = EntityManager();
   auto * data = new structures::EntityData();
-  data->texture = *entityManager.getTexture("res/Astronaut.png");
+  data->texture = *entityManager.getTexture("../res/Astronaut.png");
   data->srcRect = Rectangle(0, 0, 12, 12);
   data->dstRect = Rectangle(0, 0, 12, 12);
   data->position = structures::Vector2f(0, 0);
