@@ -15,15 +15,17 @@ namespace structures
     public:
       Vector2f();
       Vector2f(float p_x, float p_y);
-      Vector2f operator+(const Vector2f& other) const;
-      Vector2f operator-(const Vector2f& other) const;
+      Vector2f operator+(const Vector2f &other) const;
+      Vector2f operator-(const Vector2f &other) const;
       Vector2f operator*(float scalar) const;
       Vector2f operator/(float scalar) const;
       Vector2f normalized() const;
-      bool operator==(const Vector2f& other) const;
-      bool operator!=(const Vector2f& other) const;
+      bool operator==(const Vector2f &other) const;
+      bool operator!=(const Vector2f &other) const;
       Vector2 toRayVector() const;
       float length() const;
+      float dot(const Vector2f &other) const;
+      float angleTo(const Vector2f &other) const;
 
       float x{};
       float y{};

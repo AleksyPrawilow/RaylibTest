@@ -65,3 +65,27 @@ float structures::Vector2f::length() const
   return sqrt(x * x + y * y);
 }
 
+float structures::Vector2f::dot(const Vector2f &other) const
+{
+  return x * other.x + y * other.y;
+}
+
+float structures::Vector2f::angleTo(const Vector2f &other) const
+{
+  const float dotProduct = dot(other);
+  const float magnitudes = length() * other.length();
+  if (magnitudes == 0)
+  {
+    return 0.0f;
+  }
+  float cosTheta = dotProduct / magnitudes;
+  cosTheta = std::fmax(-1.0f, std::fmin(1.0f, cosTheta));
+  float angle = std::acos(cosTheta);
+  float crossProduct = x * other.y - y * other.x;
+  if (crossProduct < 0)
+  {
+    angle = -angle;
+  }
+  return angle;
+}
+
