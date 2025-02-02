@@ -29,6 +29,7 @@ int main()
   auto * dynamicCamera = new DynamicCamera(camera, player);
   camera->target = player->getEntityData()->position.toRayVector();
   camera->zoom = 10.0f;
+  player->setCamera(camera);
 
   while (!WindowShouldClose())
   {
@@ -42,6 +43,7 @@ int main()
       entity->update(GetFrameTime());
     }
     EndMode2D();
+    DrawFPS(10, 10);
     entityManager.processDeletedEntities();
     entityManager.processNewEntities();
     EndDrawing();

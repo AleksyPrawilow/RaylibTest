@@ -4,8 +4,6 @@
 
 #ifndef ENTITYMANAGER_H
 #define ENTITYMANAGER_H
-#include <iostream>
-#include <memory>
 #include <ostream>
 #include <vector>
 #include "Structures.h"
