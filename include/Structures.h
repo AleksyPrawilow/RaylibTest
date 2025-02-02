@@ -6,6 +6,7 @@
 #define STRUCTURES_H
 
 #include <raylib.h>
+#include <cmath>
 
 namespace structures
 {
@@ -18,9 +19,11 @@ namespace structures
       Vector2f operator-(const Vector2f& other) const;
       Vector2f operator*(float scalar) const;
       Vector2f operator/(float scalar) const;
+      Vector2f normalized() const;
       bool operator==(const Vector2f& other) const;
       bool operator!=(const Vector2f& other) const;
       Vector2 toRayVector() const;
+      float length() const;
 
       float x{};
       float y{};
