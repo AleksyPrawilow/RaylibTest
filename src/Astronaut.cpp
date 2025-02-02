@@ -8,7 +8,6 @@
 
 void Astronaut::update(float delta)
 {
-  std::cout << animationSpeed << std::endl;
   DrawText("hello world", 10, 10, 10, WHITE);
   currentTick += delta;
   if (currentTick > 1.0f / animationSpeed)
@@ -17,7 +16,7 @@ void Astronaut::update(float delta)
     currentTick = 0;
   }
   auto dir = structures::Vector2f(IsKeyDown(KEY_D) - IsKeyDown(KEY_A), IsKeyDown(KEY_S) - IsKeyDown(KEY_W)).normalized();
-  velocity = velocity + (dir - velocity) / 4.0f;
+  velocity = velocity + (dir - velocity) * 12.0f * delta;
   targetRotation = velocity.x * 10;
   animationState = (dir.length() > 0.0f) ? RUNNING : IDLE;
   entityData->rotation = targetRotation;
