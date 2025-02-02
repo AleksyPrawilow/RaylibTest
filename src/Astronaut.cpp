@@ -5,6 +5,7 @@
 #include "../include/Astronaut.h"
 
 #include <iostream>
+#include "../include/Gun.h"
 
 void Astronaut::update(float delta)
 {
@@ -24,6 +25,21 @@ void Astronaut::update(float delta)
   entityData->dstRect.x = entityData->position.x;
   entityData->dstRect.y = entityData->position.y;
   entityData->srcRect.width = (GetScreenToWorld2D(GetMousePosition(), *camera).x < entityData->position.x) ? 12 : -12;
+
+  if (IsKeyPressed(KEY_UP))
+  {
+    auto data = new structures::EntityData();
+    data->srcRect = Rectangle(0, 0, -22, 11);
+    data->dstRect = Rectangle(entityData->position.x + 4, entityData->position.y + 2, 22, 11);
+    data->texture = *entityManager->getTexture("../res/ShotgunToxic.png");
+    data->rotation = 0.0f;
+    data->position = entityData->position;
+    data->tint = WHITE;
+    data->textureOrigin = structures::Vector2f(5, 5.5);
+    auto * gun = entityManager->addEntity<Gun>(data);
+    gun->setCamera(camera);
+    gun->setParent(this);
+  }
 }
 
 void Astronaut::animate()
