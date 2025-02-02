@@ -1,9 +1,0 @@
-# ninja log v6
-5	749	1738500587602150069	CMakeFiles/Test.dir/src/Astronaut.cpp.o	3cbbbd494be43d1e
-593	636	1738501184153586228	Test	9f5fb26538bb193
-4	715	1738455168665209738	CMakeFiles/Test.dir/src/EntityManager.cpp.o	108604689e9081d5
-5	592	1738501183565987208	CMakeFiles/Test.dir/src/main.cpp.o	613f21687722d2c
-5	178	1738441978151777630	CMakeFiles/Test.dir/src/Structures.cpp.o	9ca6773aa29bac67
-10	720	1738501053205258416	CMakeFiles/Test.dir/src/DynamicCamera.cpp.o	410af14b16d33250
-1	81	1738501221092387230	build.ninja	e06420c859a16e43
-11	841	1738455035047061527	CMakeFiles/Test.dir/src/Entity.cpp.o	4302e0e7bba8302
