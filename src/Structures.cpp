@@ -81,11 +81,9 @@ float structures::Vector2f::angleTo(const Vector2f &other) const
   float cosTheta = dotProduct / magnitudes;
   cosTheta = std::fmax(-1.0f, std::fmin(1.0f, cosTheta));
   float angle = std::acos(cosTheta);
-  float crossProduct = x * other.y - y * other.x;
-  if (crossProduct < 0)
+  if (const float crossProduct = x * other.y - y * other.x; crossProduct < 0)
   {
     angle = -angle;
   }
   return angle;
 }
-
