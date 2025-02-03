@@ -4,7 +4,9 @@
 
 #ifndef ASTRONAUT_H
 #define ASTRONAUT_H
+#include "DynamicCamera.h"
 #include "Entity.h"
+#include "../include/Gun.h"
 
 class Astronaut : public Entity
 {
@@ -12,10 +14,10 @@ public:
   Astronaut() : Entity() {};
   Astronaut(EntityManager * p_manager, structures::EntityData * p_data) : Entity(p_manager, p_data) {};
   void update(float delta) override;
-  void setCamera(Camera2D * p_camera);
+  void setCamera(DynamicCamera *p_camera);
   void animate();
 private:
-  Camera2D * camera {};
+  DynamicCamera * camera {};
   enum ANIMATION_STATE { IDLE , RUNNING , DEAD };
   ANIMATION_STATE animationState {};
   structures::Vector2f velocity {};

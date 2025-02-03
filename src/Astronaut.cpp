@@ -5,7 +5,6 @@
 #include "../include/Astronaut.h"
 
 #include <iostream>
-#include "../include/Gun.h"
 
 void Astronaut::update(float delta)
 {
@@ -24,7 +23,7 @@ void Astronaut::update(float delta)
   entityData->position = entityData->position + velocity * 75.0f * delta;
   entityData->dstRect.x = entityData->position.x;
   entityData->dstRect.y = entityData->position.y;
-  entityData->srcRect.width = (GetScreenToWorld2D(GetMousePosition(), *camera).x < entityData->position.x) ? 12 : -12;
+  entityData->srcRect.width = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? 12 : -12;
 
   if (IsKeyPressed(KEY_UP))
   {
@@ -72,7 +71,7 @@ void Astronaut::animate()
   }
 }
 
-void Astronaut::setCamera(Camera2D * p_camera)
+void Astronaut::setCamera(DynamicCamera * p_camera)
 {
   camera = p_camera;
 }
