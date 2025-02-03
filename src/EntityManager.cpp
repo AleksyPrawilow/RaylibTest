@@ -43,6 +43,15 @@ void EntityManager::unloadTextures()
   textures.clear();
 }
 
+void EntityManager::unloadSounds()
+{
+  for (const auto &sound : sounds)
+  {
+    UnloadSound(sound.second);
+  }
+  textures.clear();
+}
+
 bool EntityManager::removeEntity(int id)
 {
   auto it = entitiesMap.find(id);
@@ -66,6 +75,20 @@ Texture2D * EntityManager::getTexture(const std::string &fileName)
   }
   textures[fileName] = LoadTexture(fileName.c_str());
   return &textures[fileName];
+}
+
+Sound * EntityManager::getSound(const std::string &fileName)
+{
+  if (fileName.empty())
+  {
+    return nullptr;
+  }
+  if (sounds.contains(fileName))
+  {
+    return &sounds[fileName];
+  }
+  sounds[fileName] = LoadSound(fileName.c_str());
+  return &sounds[fileName];
 }
 
 std::vector<std::shared_ptr<Entity> > *EntityManager::getEntities()

@@ -13,6 +13,7 @@ int main()
   constexpr std::string title = "Test Game";
 
   InitWindow(screenWidth, screenHeight, title.c_str());
+  InitAudioDevice();
   SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
   //ToggleFullscreen();
   SetExitKey(0);
@@ -32,7 +33,7 @@ int main()
   auto * dynamicCamera = new DynamicCamera(camera, player);
   camera->target = player->getEntityData()->position.toRayVector();
   camera->zoom = 7.0f;
-  player->setCamera(camera);
+  player->setCamera(dynamicCamera);
 
   while (!WindowShouldClose())
   {
@@ -42,7 +43,7 @@ int main()
     }
     BeginDrawing();
     ClearBackground(YELLOW);
-    dynamicCamera->update();
+    dynamicCamera->update(GetFrameTime());
     BeginMode2D(*camera);
     for (const auto &entity : *entityManager.getEntities())
     {
