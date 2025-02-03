@@ -15,6 +15,16 @@ void Astronaut::update(float delta)
     animate();
     currentTick = 0;
   }
+  if (animationState == RUNNING)
+  {
+    entityData->dstRect.height = std::lerp(entityData->dstRect.height, 12.0f + sin(GetTime() * 20.0f) * 2.5f, 7.5f * delta);
+    entityData->dstRect.width = std::lerp(entityData->dstRect.width, 12.0f + cos(GetTime() * 20.0f) * 2.0f, 7.5f * delta);
+  }
+  else
+  {
+    entityData->dstRect.height = std::lerp(entityData->dstRect.height, 12.0f, 7.5f * delta);
+    entityData->dstRect.width = std::lerp(entityData->dstRect.width, 12.0f, 7.5f * delta);
+  }
   auto dir = structures::Vector2f(IsKeyDown(KEY_D) - IsKeyDown(KEY_A), IsKeyDown(KEY_S) - IsKeyDown(KEY_W)).normalized();
   velocity = velocity + (dir - velocity) * 12.0f * delta;
   targetRotation = velocity.x * 10;
