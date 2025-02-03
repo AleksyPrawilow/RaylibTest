@@ -33,12 +33,17 @@ public:
   void processNewEntities();
   void processDeletedEntities();
   void unloadTextures();
+  void unloadSounds();
+
   bool removeEntity(int id);
-  Texture2D * getTexture(const std::string& fileName);
+  Texture2D * getTexture(const std::string &
+    fileName);
+  Sound * getSound(const std::string &fileName);
   std::vector<std::shared_ptr<Entity>> * getEntities();
 
 private:
   std::unordered_map<std::string, Texture2D> textures;
+  std::unordered_map<std::string, Sound> sounds;
   std::unordered_map<int, std::shared_ptr<Entity>> entitiesMap;
   std::vector<std::shared_ptr<Entity>> entities;
   std::vector<std::shared_ptr<Entity>> additionQueue;
