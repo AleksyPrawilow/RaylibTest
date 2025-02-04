@@ -21,7 +21,7 @@ Camera2D * DynamicCamera::getCamera() const
 
 void DynamicCamera::update(float delta)
 {
-  camera->target = target->getPositionRay();
+  camera->target = target->getPosition();
   shakeVector.x = std::lerp(shakeVector.x, 0.0f, 12.0f * delta);
   shakeVector.y = std::lerp(shakeVector.y, 0.0f, 12.0f * delta);
   camera->offset = Vector2(1280 -(GetMousePosition().x + 640) / 2 + shakeVector.x, 720 -(GetMousePosition().y + 360) / 2 + shakeVector.y);

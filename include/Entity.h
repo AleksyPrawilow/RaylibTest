@@ -22,7 +22,7 @@ public:
   Rectangle getSrcRect() const;
   Rectangle getDstRect() const;
   Vector2 getTextureOffset() const;
-  Vector2 getPositionRay() const;
+  Vector2 getPosition() const;
   float getRotation() const;
   Color getTint() const;
   structures::EntityData * getEntityData() const;
@@ -31,6 +31,8 @@ public:
   void setId(int p_id);
   int getId() const;
   virtual void update(float delta);
+
+  bool shouldCollide{false};
 private:
   int id{};
 };

@@ -35,7 +35,7 @@ Rectangle Entity::getDstRect() const
 
 Vector2 Entity::getTextureOffset() const
 {
-  return entityData->textureOrigin.toRayVector();
+  return entityData->textureOrigin;
 }
 
 float Entity::getRotation() const
@@ -48,9 +48,9 @@ Color Entity::getTint() const
   return entityData->tint;
 }
 
-Vector2 Entity::getPositionRay() const
+Vector2 Entity::getPosition() const
 {
-  return entityData->position.toRayVector();
+  return entityData->position;
 }
 
 structures::EntityData * Entity::getEntityData() const

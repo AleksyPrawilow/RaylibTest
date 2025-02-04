@@ -39,8 +39,8 @@ void Gun::update(float delta)
     entityData->dstRect.width = std::lerp(entityData->dstRect.width, 22.0f, 20.0f * delta);
     entityData->dstRect.height = std::lerp(entityData->dstRect.height, 11.0f, 25.0f * delta);
   }
-  targetRotation = structures::Vector2f(1, 0).angleTo(structures::Vector2f(GetMouseX() - 640, GetMouseY() - 360)) * RAD2DEG;
-  entityData->position = structures::Vector2f(parent->getEntityData()->dstRect.x, parent->getEntityData()->dstRect.y + 2);
+  targetRotation = structures::angleTo(Vector2(1, 0), Vector2(GetMouseX() - 640, GetMouseY() - 360)) * RAD2DEG;
+  entityData->position = Vector2(parent->getEntityData()->dstRect.x, parent->getEntityData()->dstRect.y + 2);
   entityData->dstRect.x = parent->getEntityData()->dstRect.x;
   entityData->dstRect.y = parent->getEntityData()->dstRect.y + 2;
   entityData->srcRect.height = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? -11.0f : 11.0f;

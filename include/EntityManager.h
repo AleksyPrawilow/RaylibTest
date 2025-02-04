@@ -36,8 +36,7 @@ public:
   void unloadSounds();
 
   bool removeEntity(int id);
-  Texture2D * getTexture(const std::string &
-    fileName);
+  Texture2D * getTexture(const std::string &fileName);
   Sound * getSound(const std::string &fileName);
   std::vector<std::shared_ptr<Entity>> * getEntities();
 
