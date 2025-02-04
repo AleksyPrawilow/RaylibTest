@@ -4,13 +4,22 @@
 
 #ifndef WALL_H
 #define WALL_H
+#include "Entity.h"
 
-
-
-class Wall {
-
+class Wall : public Entity
+{
+private:
+  enum STATE
+  {
+    NORMAL,
+    THIRD_TRANSFORMED,
+    TWO_THIRDS_TRANSFORMED
+  };
+  STATE currentState{};
+public:
+  Wall() : Entity() {};
+  Wall(EntityManager * p_manager, structures::EntityData * p_data) : Entity(p_manager, p_data) {};
+  void changeState();
 };
-
-
 
 #endif //WALL_H

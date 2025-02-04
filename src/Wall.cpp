@@ -3,3 +3,8 @@
 //
 
 #include "../include/Wall.h"
+
+void Wall::changeState()
+{
+
+}
