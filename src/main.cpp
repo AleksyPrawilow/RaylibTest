@@ -18,23 +18,35 @@ int main()
 
   InitWindow(screenWidth, screenHeight, title.c_str());
   InitAudioDevice();
-  Music music = LoadMusicStream("../res/IcyPath.mp3");
+
+  auto  music          = LoadMusicStream("../res/IcyPath.mp3");
+  auto  cursorTexture  = LoadTexture("../res/Crosshair.png");
+  auto  cursorSrcRect  = Rectangle(0, 0, 24, 24);
+  auto  cursorDstRect  = Rectangle(0, 0, 72, 72);
+  auto  cursorOffset   = Vector2(36, 36);
+  float cursorRotation = 0.0f;
+  auto cursorColor     = WHITE;
+
   PlayMusicStream(music);
   //SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
-  //ToggleFullscreen();
   SetExitKey(0);
 
-  auto entityManager = EntityManager();
+  auto entityManager            = EntityManager();
+  entityManager.setCursorDstRect (&cursorDstRect);
+  entityManager.setCursorOffset  (&cursorOffset);
+  entityManager.setCursorColor   (&cursorColor);
+  entityManager.setCursorRotation(&cursorRotation);
   createLevel(&entityManager);
-  auto * data = new structures::EntityData();
-  data->texture = *entityManager.getTexture("../res/Astronaut.png");
-  data->srcRect = Rectangle(0, 0, 12, 12);
-  data->dstRect = Rectangle(0, 0, 12, 12);
-  data->position = Vector2(0, 0);
+
+  auto * data         = new structures::EntityData();
+  data->texture       = *entityManager.getTexture("../res/Astronaut.png");
+  data->srcRect       = Rectangle(0, 0, 12, 12);
+  data->dstRect       = Rectangle(0, 0, 12, 12);
+  data->position      = Vector2(0, 0);
   data->textureOrigin = Vector2(6, 6);
-  data->rotation = 0.0f;
-  data->tint = WHITE;
-  auto * player = entityManager.addEntity<Astronaut>(data);
+  data->rotation      = 0.0f;
+  data->tint          = WHITE;
+  auto * player= entityManager.addEntity<Astronaut>(data);
 
   auto * camera = new Camera2D();
   auto * dynamicCamera = new DynamicCamera(camera, player);
@@ -60,11 +72,12 @@ int main()
     }
     EndMode2D();
     DrawFPS(10, 10);
+    HideCursor();
+    DrawTexturePro(cursorTexture, cursorSrcRect, cursorDstRect, cursorOffset, cursorRotation, cursorColor);
     entityManager.processDeletedEntities();
     entityManager.processNewEntities();
     EndDrawing();
   }
-
   CloseWindow();
 
   return 0;
