@@ -17,6 +17,8 @@ add_executable(Test src/main.cpp
         src/DynamicCamera.cpp
         include/DynamicCamera.h
         src/Gun.cpp
-        include/Gun.h)
+        include/Gun.h
+        src/Wall.cpp
+        include/Wall.h)
 
 target_link_libraries(Test raylib)
