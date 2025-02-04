@@ -12,8 +12,8 @@ int main()
 {
   ChangeDirectory(GetApplicationDirectory());
 
-  constexpr int screenWidth = 1280;
-  constexpr int screenHeight = 720;
+  constexpr int screenWidth   = 1280;
+  constexpr int screenHeight  = 720;
   constexpr std::string title = "Test Game";
 
   InitWindow(screenWidth, screenHeight, title.c_str());
@@ -31,7 +31,7 @@ int main()
   //SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
   SetExitKey(0);
 
-  auto entityManager            = EntityManager();
+  auto entityManager = EntityManager();
   entityManager.setCursorDstRect (&cursorDstRect);
   entityManager.setCursorOffset  (&cursorOffset);
   entityManager.setCursorColor   (&cursorColor);
@@ -46,9 +46,9 @@ int main()
   data->textureOrigin = Vector2(6, 6);
   data->rotation      = 0.0f;
   data->tint          = WHITE;
-  auto * player= entityManager.addEntity<Astronaut>(data);
-
-  auto * camera = new Camera2D();
+  
+  auto * player        = entityManager.addEntity<Astronaut>(data);
+  auto * camera        = new Camera2D();
   auto * dynamicCamera = new DynamicCamera(camera, player);
   camera->target = player->getEntityData()->position;
   camera->zoom = 7.0f;
