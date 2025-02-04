@@ -24,6 +24,7 @@ public:
   void setParent(Entity * p_parent);
   void setCamera(DynamicCamera *p_camera);
   void update(float delta) override;
+  void updateCursor() const;
 };
 
 

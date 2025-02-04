@@ -91,6 +91,46 @@ Sound * EntityManager::getSound(const std::string &fileName)
   return &sounds[fileName];
 }
 
+Rectangle * EntityManager::getCursorDstRect() const
+{
+  return cursorDstRect;
+}
+
+Vector2 * EntityManager::getCursorOffset() const
+{
+  return cursorOffset;
+}
+
+Color * EntityManager::getCursorColor() const
+{
+  return cursorColor;
+}
+
+float * EntityManager::getCursorRotation() const
+{
+  return cursorRotation;
+}
+
+void EntityManager::setCursorDstRect(Rectangle * p_cursorDstRect)
+{
+  cursorDstRect = p_cursorDstRect;
+}
+
+void EntityManager::setCursorOffset(Vector2 * p_cursorOffset)
+{
+  cursorOffset = p_cursorOffset;
+}
+
+void EntityManager::setCursorColor(Color * p_cursorColor)
+{
+  cursorColor = p_cursorColor;
+}
+
+void EntityManager::setCursorRotation(float * p_cursorRotation)
+{
+  cursorRotation = p_cursorRotation;
+}
+
 std::vector<std::shared_ptr<Entity> > *EntityManager::getEntities()
 {
   return &entities;

@@ -22,21 +22,22 @@ void Gun::setCamera(DynamicCamera * p_camera)
 
 void Gun::update(float delta)
 {
+  updateCursor();
   if (isShooting)
   {
     elapsedTime += delta;
-    entityData->dstRect.width = std::lerp(entityData->dstRect.width, 11.0f, 30.0f * delta);
+    entityData->dstRect.width  = std::lerp(entityData->dstRect.width,  11.0f, 30.0f * delta);
     entityData->dstRect.height = std::lerp(entityData->dstRect.height, 13.0f, 35.0f * delta);
 
     if (elapsedTime >= 0.1)
     {
       elapsedTime = 0.0f;
-      isShooting = false;
+      isShooting  = false;
     }
   }
   else
   {
-    entityData->dstRect.width = std::lerp(entityData->dstRect.width, 22.0f, 20.0f * delta);
+    entityData->dstRect.width  = std::lerp(entityData->dstRect.width,  22.0f, 20.0f * delta);
     entityData->dstRect.height = std::lerp(entityData->dstRect.height, 11.0f, 25.0f * delta);
   }
   targetRotation = structures::angleTo(Vector2(1, 0), Vector2(GetMouseX() - 640, GetMouseY() - 360)) * RAD2DEG;
@@ -51,4 +52,15 @@ void Gun::update(float delta)
     PlaySound(*sound);
     isShooting = true;
   }
+}
+
+void Gun::updateCursor() const
+{
+  entityManager->getCursorOffset() ->x      = 36.0f + 3.0f * sin(GetTime() * 10.0f);
+  entityManager->getCursorOffset() ->y      = 36.0f + 3.0f * sin(GetTime() * 10.0f);
+  entityManager->getCursorDstRect()->width  = 72.0f + 6.0f * sin(GetTime() * 10.0f);
+  entityManager->getCursorDstRect()->height = 72.0f + 6.0f * sin(GetTime() * 10.0f);
+  entityManager->getCursorDstRect()->x      = GetMouseX();
+  entityManager->getCursorDstRect()->y      = GetMouseY();
+  *entityManager->getCursorRotation()       = GetTime() * RAD2DEG;
 }
