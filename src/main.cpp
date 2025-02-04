@@ -19,13 +19,13 @@ int main()
   InitWindow(screenWidth, screenHeight, title.c_str());
   InitAudioDevice();
 
-  auto  music          = LoadMusicStream("../res/IcyPath.mp3");
-  auto  cursorTexture  = LoadTexture("../res/Crosshair.png");
-  auto  cursorSrcRect  = Rectangle(0, 0, 24, 24);
-  auto  cursorDstRect  = Rectangle(0, 0, 72, 72);
-  auto  cursorOffset   = Vector2(36, 36);
-  float cursorRotation = 0.0f;
-  auto cursorColor     = WHITE;
+  auto music          = LoadMusicStream("../res/IcyPath.mp3");
+  auto cursorTexture  = LoadTexture("../res/Crosshair.png");
+  auto cursorSrcRect  = Rectangle(0, 0, 24, 24);
+  auto cursorDstRect  = Rectangle(0, 0, 72, 72);
+  auto cursorOffset   = Vector2(36, 36);
+  auto cursorRotation = 0.0f;
+  auto cursorColor    = WHITE;
 
   PlayMusicStream(music);
   //SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
