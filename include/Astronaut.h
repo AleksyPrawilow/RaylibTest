@@ -20,7 +20,7 @@ private:
   DynamicCamera * camera {};
   enum ANIMATION_STATE { IDLE , RUNNING , DEAD };
   ANIMATION_STATE animationState {};
-  structures::Vector2f velocity {};
+  Vector2 velocity {};
   float animationSpeed = 10.0f;
   float currentTick {};
   float targetRotation {};

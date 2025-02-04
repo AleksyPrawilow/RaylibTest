@@ -25,14 +25,36 @@ void Astronaut::update(float delta)
     entityData->dstRect.height = std::lerp(entityData->dstRect.height, 12.0f, 7.5f * delta);
     entityData->dstRect.width = std::lerp(entityData->dstRect.width, 12.0f, 7.5f * delta);
   }
-  auto dir = structures::Vector2f(IsKeyDown(KEY_D) - IsKeyDown(KEY_A), IsKeyDown(KEY_S) - IsKeyDown(KEY_W)).normalized();
+  auto dir = Vector2Normalize(Vector2(IsKeyDown(KEY_D) - IsKeyDown(KEY_A), IsKeyDown(KEY_S) - IsKeyDown(KEY_W)));
   velocity = velocity + (dir - velocity) * 12.0f * delta;
   targetRotation = velocity.x * 10;
-  animationState = (dir.length() > 0.0f) ? RUNNING : IDLE;
+  animationState = (Vector2Length(dir) > 0.0f) ? RUNNING : IDLE;
   entityData->rotation = targetRotation;
-  entityData->position = entityData->position + velocity * 75.0f * delta;
-  entityData->dstRect.x = entityData->position.x;
-  entityData->dstRect.y = entityData->position.y;
+  bool canMove = true;
+  Rectangle temp = entityData->dstRect;
+  temp.x = entityData->position.x + velocity.x * 75.0f * delta - 4;
+  temp.y = entityData->position.y + velocity.y * 75.0f * delta - 6;
+  temp.width = 8;
+  temp.height = 12;
+  for (const auto &collider : *entityManager->getEntities())
+  {
+    if (!collider->shouldCollide)
+    {
+      continue;
+    }
+    if (CheckCollisionRecs(temp, collider->getDstRect()))
+    {
+      velocity = Vector2(0.0f, 0.0f);
+      canMove = false;
+      break;
+    }
+  }
+  if (canMove)
+  {
+    entityData->position = entityData->position + velocity * 75.0f * delta;
+    entityData->dstRect.x = entityData->position.x;
+    entityData->dstRect.y = entityData->position.y;
+  }
   entityData->srcRect.width = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? 12 : -12;
 
   if (IsKeyPressed(KEY_UP))
@@ -44,7 +66,7 @@ void Astronaut::update(float delta)
     data->rotation = 0.0f;
     data->position = entityData->position;
     data->tint = WHITE;
-    data->textureOrigin = structures::Vector2f(5, 5.5);
+    data->textureOrigin = Vector2(5.0f, 5.5f);
     auto * gun = entityManager->addEntity<Gun>(data);
     gun->setCamera(camera);
     gun->setParent(this);
