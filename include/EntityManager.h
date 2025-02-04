@@ -30,35 +30,34 @@ public:
 
   int currentId = 0;
 
-  void processNewEntities();
-  void processDeletedEntities();
-  void unloadTextures();
-  void unloadSounds();
-
-  bool removeEntity(int id);
+  void        processNewEntities();
+  void        processDeletedEntities();
+  void        unloadTextures();
+  void        unloadSounds();
+  bool        removeEntity(int id);
   Texture2D * getTexture(const std::string &fileName);
-  Sound * getSound(const std::string &fileName);
+  Sound     * getSound(const std::string &fileName);
   Rectangle * getCursorDstRect() const;
-  Vector2 * getCursorOffset() const;
-  Color * getCursorColor() const;
-  float * getCursorRotation() const;
-  void setCursorDstRect(Rectangle * p_cursorDstRect);
-  void setCursorOffset(Vector2 * p_cursorOffset);
-  void setCursorColor(Color * p_cursorColor);
-  void setCursorRotation(float * p_cursorRotation);
+  Vector2   * getCursorOffset() const;
+  Color     * getCursorColor() const;
+  float     * getCursorRotation() const;
+  void        setCursorDstRect(Rectangle * p_cursorDstRect);
+  void        setCursorOffset(Vector2 * p_cursorOffset);
+  void        setCursorColor(Color * p_cursorColor);
+  void        setCursorRotation(float * p_cursorRotation);
   std::vector<std::shared_ptr<Entity>> * getEntities();
 
 private:
-  Rectangle * cursorDstRect{};
-  Vector2 * cursorOffset{};
-  Color * cursorColor{};
-  float * cursorRotation{};
-  std::unordered_map<std::string, Texture2D> textures;
-  std::unordered_map<std::string, Sound> sounds;
+  Rectangle * cursorDstRect {};
+  Vector2   * cursorOffset  {};
+  Color     * cursorColor   {};
+  float     * cursorRotation{};
+  std::unordered_map<std::string, Texture2D>       textures;
+  std::unordered_map<std::string, Sound>           sounds;
   std::unordered_map<int, std::shared_ptr<Entity>> entitiesMap;
-  std::vector<std::shared_ptr<Entity>> entities;
-  std::vector<std::shared_ptr<Entity>> additionQueue;
-  std::vector<int> deletionQueue;
+  std::vector<std::shared_ptr<Entity>>             entities;
+  std::vector<std::shared_ptr<Entity>>             additionQueue;
+  std::vector<int>                                 deletionQueue;
 };
 
 #endif //ENTITYMANAGER_H
