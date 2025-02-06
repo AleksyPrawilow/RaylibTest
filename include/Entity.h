@@ -4,6 +4,7 @@
 
 #ifndef ENTITY_H
 #define ENTITY_H
+#include <random>
 #include "Structures.h"
 #include "EntityManager.h"
 
@@ -12,6 +13,7 @@ class EntityManager;
 class Entity
 {
 protected:
+  std::default_random_engine generator;
   EntityManager * entityManager{};
   structures::EntityData * entityData{};
 public:
@@ -23,16 +25,21 @@ public:
   Rectangle getDstRect() const;
   Vector2 getTextureOffset() const;
   Vector2 getPosition() const;
+  static Vector2 getCollisionNormal(Rectangle A, Rectangle B);
+  static Vector2 getDirection(const Vector2 &A, const Vector2 &B);
+  static Vector2 fromAngle(float angle);
   float getRotation() const;
   Color getTint() const;
   structures::EntityData * getEntityData() const;
+  virtual void render();
   void addEntity(structures::EntityData * data) const;
   void queueFree() const;
   void setId(int p_id);
   int getId() const;
+  void moveAndSlide(Vector2 &velocity, float delta) const;
   virtual void update(float delta);
 
-  bool shouldCollide{false};
+  bool isSolid{false};
 private:
   int id{};
 };
