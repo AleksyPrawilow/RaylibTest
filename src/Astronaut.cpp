@@ -30,31 +30,7 @@ void Astronaut::update(float delta)
   targetRotation = velocity.x * 10;
   animationState = (Vector2Length(dir) > 0.0f) ? RUNNING : IDLE;
   entityData->rotation = targetRotation;
-  bool canMove = true;
-  Rectangle temp = entityData->dstRect;
-  temp.x = entityData->position.x + velocity.x * 75.0f * delta - 4;
-  temp.y = entityData->position.y + velocity.y * 75.0f * delta - 6;
-  temp.width = 8;
-  temp.height = 12;
-  for (const auto &collider : *entityManager->getEntities())
-  {
-    if (!collider->shouldCollide)
-    {
-      continue;
-    }
-    if (CheckCollisionRecs(temp, collider->getDstRect()))
-    {
-      velocity = Vector2(0.0f, 0.0f);
-      canMove = false;
-      break;
-    }
-  }
-  if (canMove)
-  {
-    entityData->position = entityData->position + velocity * 75.0f * delta;
-    entityData->dstRect.x = entityData->position.x;
-    entityData->dstRect.y = entityData->position.y;
-  }
+  moveAndSlide(velocity, delta);
   entityData->srcRect.width = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? 12 : -12;
 
   if (IsKeyPressed(KEY_UP))
