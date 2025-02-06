@@ -2,7 +2,7 @@
 // Created by Alexey Pravilov on 6.02.25.
 //
 
-#include "Bullet.h"
+#include "../include/Bullet.h"
 
 Bullet::Bullet(EntityManager * p_manager, structures::EntityData * p_data) : Entity(p_manager, p_data)
 {
