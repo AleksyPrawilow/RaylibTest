@@ -7,6 +7,7 @@
 #include "DynamicCamera.h"
 #include "Entity.h"
 #include "Structures.h"
+#include "Bullet.h"
 
 class Gun : public Entity
 {
@@ -25,6 +26,7 @@ public:
   void setCamera(DynamicCamera *p_camera);
   void update(float delta) override;
   void updateCursor() const;
+  void shoot();
 };
 
 

@@ -48,9 +48,7 @@ void Gun::update(float delta)
   entityData->rotation = targetRotation;
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
   {
-    camera->createShake(10.0f, 0.01f, 0.25f, 23);
-    PlaySound(*sound);
-    isShooting = true;
+    shoot();
   }
 }
 
@@ -63,4 +61,27 @@ void Gun::updateCursor() const
   entityManager->getCursorDstRect()->x      = GetMouseX();
   entityManager->getCursorDstRect()->y      = GetMouseY();
   *entityManager->getCursorRotation()       = GetTime() * RAD2DEG;
+}
+
+void Gun::shoot()
+{
+  camera->createShake(10.0f, 0.01f, 0.25f, 23);
+  PlaySound(*sound);
+  isShooting = true;
+  for (int i = 0; i < 7; i++)
+  {
+    auto data = new structures::EntityData();
+    data->texture = *entityManager->getTexture("../res/Bullet.png");
+    data->srcRect = Rectangle(0, 0, 6, 6);
+    data->dstRect = Rectangle(entityData->position.x, entityData->position.y, 6, 6);
+    data->textureOrigin = Vector2(3, 3);
+    data->position = entityData->position;
+    data->rotation = 0.0f;
+    data->tint = WHITE;
+    auto bullet = entityManager->addEntity<Bullet>(data);
+    std::uniform_real_distribution<float> dist(-30, 30);
+    bullet->setTargetRotation(dist(generator) * DEG2RAD);
+    //bullet->setDirection(Vector2Normalize(getDirection(entityData->position, GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()))) + fromAngle(dist(generator)));
+    bullet->setSpeed(100.0f + dist(generator));
+  }
 }
