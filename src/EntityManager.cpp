@@ -106,6 +106,16 @@ Color * EntityManager::getCursorColor() const
   return cursorColor;
 }
 
+DynamicCamera * EntityManager::getDynamicCamera() const
+{
+  return camera;
+}
+
+void EntityManager::setDynamicCamera(DynamicCamera * p_dynamicCamera)
+{
+  camera = p_dynamicCamera;
+}
+
 float * EntityManager::getCursorRotation() const
 {
   return cursorRotation;
