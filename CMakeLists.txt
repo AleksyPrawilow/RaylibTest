@@ -20,7 +20,7 @@ add_executable(Test src/main.cpp
         include/Gun.h
         src/Wall.cpp
         include/Wall.h
-        include/Bullet.cpp
+        src/Bullet.cpp
         include/Bullet.h)
 
 target_link_libraries(Test raylib)
