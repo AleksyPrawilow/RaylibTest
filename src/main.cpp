@@ -50,12 +50,14 @@ int main()
   auto * player        = entityManager.addEntity<Astronaut>(data);
   auto * camera        = new Camera2D();
   auto * dynamicCamera = new DynamicCamera(camera, player);
+  entityManager.setDynamicCamera(dynamicCamera);
   camera->target = player->getEntityData()->position;
   camera->zoom = 7.0f;
   player->setCamera(dynamicCamera);
 
   while (!WindowShouldClose())
   {
+    dynamicCamera->update(GetFrameTime());
     UpdateMusicStream(music);
     if (IsKeyPressed(KEY_F1))
     {
@@ -63,12 +65,11 @@ int main()
     }
     BeginDrawing();
     ClearBackground(YELLOW);
-    dynamicCamera->update(GetFrameTime());
     BeginMode2D(*camera);
     for (const auto &entity : *entityManager.getEntities())
     {
-      DrawTexturePro(entity->getTexture(), entity->getSrcRect(), entity->getDstRect(), entity->getTextureOffset(), entity->getRotation(), entity->getTint());
       entity->update(GetFrameTime());
+      entity->render();
     }
     EndMode2D();
     DrawFPS(10, 10);
@@ -126,7 +127,7 @@ void createLevel(EntityManager * entity_manager)
           data->tint = WHITE;
           data->texture = *entity_manager->getTexture("../res/Wall.png");
           wall = entity_manager->addEntity<Wall>(data);
-          wall->shouldCollide = true;
+          wall->isSolid = true;
           break;
         default:
           data = new structures::EntityData();
@@ -138,7 +139,7 @@ void createLevel(EntityManager * entity_manager)
           data->tint = WHITE;
           data->texture = *entity_manager->getTexture("../res/Wall.png");
           wall = entity_manager->addEntity<Wall>(data);
-          wall->shouldCollide = false;
+          wall->isSolid = false;
           break;
       }
     }
