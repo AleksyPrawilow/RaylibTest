@@ -8,6 +8,8 @@
 #include "Entity.h"
 #include "Structures.h"
 
+class Entity;
+
 class DynamicCamera
 {
 public:
