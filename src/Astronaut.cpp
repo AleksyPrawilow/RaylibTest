@@ -30,7 +30,7 @@ void Astronaut::update(float delta)
   targetRotation = velocity.x * 10;
   animationState = (Vector2Length(dir) > 0.0f) ? RUNNING : IDLE;
   entityData->rotation = targetRotation;
-  moveAndSlide(velocity, delta);
+  moveAndSlide(velocity, delta * 75.0f);
   entityData->srcRect.width = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? 12 : -12;
 
   if (IsKeyPressed(KEY_UP))

@@ -28,6 +28,7 @@ public:
   static Vector2 getCollisionNormal(Rectangle A, Rectangle B);
   static Vector2 getDirection(const Vector2 &A, const Vector2 &B);
   static Vector2 fromAngle(float angle);
+  static Vector2 project(Vector2 &A, Vector2 &B);
   float getRotation() const;
   Color getTint() const;
   structures::EntityData * getEntityData() const;
@@ -36,7 +37,7 @@ public:
   void queueFree() const;
   void setId(int p_id);
   int getId() const;
-  void moveAndSlide(Vector2 &velocity, float delta) const;
+  void moveAndSlide(Vector2 &velocity, float scalar) const;
   virtual void update(float delta);
 
   bool isSolid{false};

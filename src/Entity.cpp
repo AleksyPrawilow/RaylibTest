@@ -93,6 +93,17 @@ Vector2 Entity::fromAngle(const float angle)
   return Vector2(cos(angle), sin(angle));
 }
 
+Vector2 Entity::project(Vector2 &A, Vector2 &B)
+{
+  float bSquared = B.x * B.x + B.y * B.y;
+  if (bSquared == 0.0f)
+  {
+    return Vector2(0.0f, 0.0f);
+  }
+  float scale = Vector2DotProduct(A, B) / bSquared;
+  return Vector2(B.x * scale, B.y * scale);
+}
+
 structures::EntityData * Entity::getEntityData() const
 {
   return entityData;
@@ -123,13 +134,13 @@ int Entity::getId() const
   return id;
 }
 
-void Entity::moveAndSlide(Vector2 &velocity, float delta) const
+void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
 {
   Rectangle temp = entityData->dstRect;
-  temp.x = entityData->position.x + velocity.x * 75.0f * delta - 4;
-  temp.y = entityData->position.y + velocity.y * 75.0f * delta - 6;
   temp.width = 8;
   temp.height = 12;
+  temp.x = entityData->position.x + velocity.x * scalar - temp.width / 2;
+  temp.y = entityData->position.y + velocity.y * scalar - temp.height / 2;
   for (const auto &collider : *entityManager->getEntities())
   {
     if (!collider->isSolid)
@@ -139,11 +150,18 @@ void Entity::moveAndSlide(Vector2 &velocity, float delta) const
     if (CheckCollisionRecs(temp, collider->getDstRect()))
     {
       auto normal = getCollisionNormal(temp, collider->getDstRect());
-      velocity = Vector2Reflect(velocity, normal);
+      Vector2 projection = project(velocity, normal);
+      velocity = velocity - projection;
+      temp.x = entityData->position.x + velocity.x * scalar - temp.width / 2;
+      temp.y = entityData->position.y + velocity.y * scalar - temp.height / 2;
+      if (CheckCollisionRecs(temp, collider->getDstRect()))
+      {
+        velocity = Vector2Zero();
+      }
       break;
     }
   }
-  entityData->position = entityData->position + velocity * 75.0f * delta;
+  entityData->position = entityData->position + velocity * scalar;
   entityData->dstRect.x = entityData->position.x;
   entityData->dstRect.y = entityData->position.y;
 }
