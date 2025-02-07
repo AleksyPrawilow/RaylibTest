@@ -70,18 +70,21 @@ void Gun::shoot()
   isShooting = true;
   for (int i = 0; i < 7; i++)
   {
+    Vector2 direction = Vector2Normalize(getDirection(entityData->position, GetScreenToWorld2D(GetMousePosition(), *camera->getCamera())));
+    float angle = Vector2Angle(Vector2(1.0f, 0.0f), direction);
     auto data = new structures::EntityData();
     data->texture = *entityManager->getTexture("../res/Bullet.png");
     data->srcRect = Rectangle(0, 0, 6, 6);
-    data->dstRect = Rectangle(entityData->position.x, entityData->position.y, 6, 6);
+    data->dstRect = Rectangle(entityData->position.x + direction.x * 5.0f, entityData->position.y + direction.y * 5.0f, 6, 6);
     data->textureOrigin = Vector2(3, 3);
-    data->position = entityData->position;
+    data->position = entityData->position + direction * 5.0f;
     data->rotation = 0.0f;
     data->tint = WHITE;
     auto bullet = entityManager->addEntity<Bullet>(data);
-    std::uniform_real_distribution<float> dist(-30, 30);
-    bullet->setTargetRotation(dist(generator) * DEG2RAD);
+    std::uniform_real_distribution<float> dist(-20, 20);
+    bullet->setTargetRotation(dist(generator) * DEG2RAD + angle);
+    bullet->setOffset(dist(generator));
     //bullet->setDirection(Vector2Normalize(getDirection(entityData->position, GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()))) + fromAngle(dist(generator)));
-    bullet->setSpeed(100.0f + dist(generator));
+    bullet->setSpeed(150.0f + dist(generator));
   }
 }

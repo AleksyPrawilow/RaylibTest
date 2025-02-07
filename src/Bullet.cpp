@@ -19,6 +19,11 @@ void Bullet::setTargetRotation(float p_targetRotation)
   targetRotation = p_targetRotation;
 }
 
+void Bullet::setOffset(float p_offset)
+{
+  offset = p_offset;
+}
+
 void Bullet::update(float delta)
 {
   entityData->position += fromAngle(targetRotation) * speed * delta;
@@ -33,5 +38,7 @@ void Bullet::render()
   {
     return;
   }
+  DrawTexturePro(*entityManager->getTexture("../res/BulletGlow.png"), Rectangle(0, 0, 6, 6), Rectangle(entityData->position.x, entityData->position.y, 6 + abs(6 * sin((GetTime() + offset) * 5)), 6 + abs(6 * cos((GetTime() + offset) * 5))), Vector2(3 + abs(3 * sin((GetTime() + offset) * 5)), 3 + abs(3 * cos((GetTime() + offset) * 5))), 0.0f, WHITE);
+  //DrawCircle(entityData->position.x, entityData->position.y, 5 + 2 * sin(GetTime() * 10), Color(0, 255, 0, 45));
   Entity::render();
 }

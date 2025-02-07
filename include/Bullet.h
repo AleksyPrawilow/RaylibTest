@@ -9,6 +9,7 @@
 class Bullet : public Entity
 {
 protected:
+  float offset = 0.0f;
   float speed = 5.0f;
   float targetRotation = 0.0f;
   DynamicCamera * camera{};
@@ -17,6 +18,7 @@ public:
   Bullet(EntityManager * p_manager, structures::EntityData * p_data);
   void setSpeed(float p_speed);
   void setTargetRotation(float p_targetRotation);
+  void setOffset(float p_offset);
   void update(float delta) override;
   void render() override;
 };
