@@ -46,6 +46,7 @@ int main()
   data->textureOrigin = Vector2(6, 6);
   data->rotation      = 0.0f;
   data->tint          = WHITE;
+  data->shouldBeInSpatialGrid = true;
   
   auto * player        = entityManager.addEntity<Astronaut>(data);
   auto * camera        = new Camera2D();
@@ -125,6 +126,7 @@ void createLevel(EntityManager * entity_manager)
           data->position = Vector2(i * 24, j * 24);
           data->rotation = 0.0f;
           data->tint = WHITE;
+          data->shouldBeInSpatialGrid = true;
           data->texture = *entity_manager->getTexture("../res/Wall.png");
           wall = entity_manager->addEntity<Wall>(data);
           wall->isSolid = true;
