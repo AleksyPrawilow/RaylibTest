@@ -8,7 +8,6 @@
 
 void Astronaut::update(float delta)
 {
-  DrawText("hello world", 10, 10, 10, WHITE);
   currentTick += delta;
   if (currentTick > 1.0f / animationSpeed)
   {

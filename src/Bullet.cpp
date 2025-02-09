@@ -7,6 +7,9 @@
 Bullet::Bullet(EntityManager * p_manager, structures::EntityData * p_data) : Entity(p_manager, p_data)
 {
   camera = entityManager->getDynamicCamera();
+  glowTexture = *p_manager->getTexture("../res/BulletGlow.png");
+  glowSrcRect = Rectangle(0, 0, 6, 6);
+  glowDstRect = Rectangle(entityData->position.x, entityData->position.y, 6, 6);
 }
 
 void Bullet::setSpeed(float p_speed)
@@ -33,12 +36,16 @@ void Bullet::update(float delta)
 
 void Bullet::render()
 {
-  Vector2 screenPos = GetWorldToScreen2D(entityData->position, *camera->getCamera());
-  if (screenPos.x < -64 || screenPos.x > 1400 || screenPos.y < -64  || screenPos.y > 784)
+  if (!isOnScreen())
   {
     return;
   }
-  DrawTexturePro(*entityManager->getTexture("../res/BulletGlow.png"), Rectangle(0, 0, 6, 6), Rectangle(entityData->position.x, entityData->position.y, 6 + abs(6 * sin((GetTime() + offset) * 5)), 6 + abs(6 * cos((GetTime() + offset) * 5))), Vector2(3 + abs(3 * sin((GetTime() + offset) * 5)), 3 + abs(3 * cos((GetTime() + offset) * 5))), 0.0f, WHITE);
-  //DrawCircle(entityData->position.x, entityData->position.y, 5 + 2 * sin(GetTime() * 10), Color(0, 255, 0, 45));
+  float glowScaleModifier = abs(6 * sin((GetTime() + offset) * 5));
+  glowDstRect.x = entityData->position.x;
+  glowDstRect.y = entityData->position.y;
+  glowDstRect.width = 6 + glowScaleModifier;
+  glowDstRect.height = 6 + glowScaleModifier;
+  auto textureOffset = Vector2(3 + glowScaleModifier / 2, 3 + glowScaleModifier / 2);
+  DrawTexturePro(glowTexture, glowSrcRect,  glowDstRect, textureOffset, 0.0f, WHITE);
   Entity::render();
 }

@@ -20,6 +20,7 @@ public:
   Wall() : Entity() {};
   Wall(EntityManager * p_manager, structures::EntityData * p_data) : Entity(p_manager, p_data) {};
   void changeState();
+  void render() override;
 };
 
 #endif //WALL_H

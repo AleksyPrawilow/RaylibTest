@@ -13,6 +13,9 @@ protected:
   float speed = 5.0f;
   float targetRotation = 0.0f;
   DynamicCamera * camera{};
+  Texture2D glowTexture{};
+  Rectangle glowSrcRect{};
+  Rectangle glowDstRect{};
 public:
   Bullet() : Entity() {};
   Bullet(EntityManager * p_manager, structures::EntityData * p_data);

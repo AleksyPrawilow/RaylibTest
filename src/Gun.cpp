@@ -46,7 +46,7 @@ void Gun::update(float delta)
   entityData->dstRect.y = parent->getEntityData()->dstRect.y + 2;
   entityData->srcRect.height = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? -11.0f : 11.0f;
   entityData->rotation = targetRotation;
-  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
   {
     shoot();
   }

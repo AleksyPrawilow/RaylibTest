@@ -114,6 +114,16 @@ void Entity::render()
   DrawTexturePro(getTexture(), getSrcRect(), getDstRect(), getTextureOffset(), getRotation(), getTint());
 }
 
+bool Entity::isOnScreen()
+{
+  Vector2 screenPos = GetWorldToScreen2D(entityData->position, *entityManager->getDynamicCamera()->getCamera());
+  if (screenPos.x < -200 || screenPos.x > 1480 || screenPos.y < -200  || screenPos.y > 920)
+  {
+    return false;
+  }
+  return true;
+}
+
 void Entity::addEntity(structures::EntityData * data) const
 {
   (void)entityManager->addEntity<Entity>(data);

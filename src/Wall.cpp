@@ -8,3 +8,11 @@ void Wall::changeState()
 {
 
 }
+
+void Wall::render()
+{
+  if (isOnScreen())
+  {
+    Entity::render();
+  }
+}

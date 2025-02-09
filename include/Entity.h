@@ -33,6 +33,7 @@ public:
   Color getTint() const;
   structures::EntityData * getEntityData() const;
   virtual void render();
+  bool isOnScreen();
   void addEntity(structures::EntityData * data) const;
   void queueFree() const;
   void setId(int p_id);
