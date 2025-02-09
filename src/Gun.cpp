@@ -46,7 +46,7 @@ void Gun::update(float delta)
   entityData->dstRect.y = parent->getEntityData()->dstRect.y + 2;
   entityData->srcRect.height = (GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()).x < entityData->position.x) ? -11.0f : 11.0f;
   entityData->rotation = targetRotation;
-  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
   {
     shoot();
   }
@@ -80,11 +80,11 @@ void Gun::shoot()
     data->position = entityData->position + direction * 5.0f;
     data->rotation = 0.0f;
     data->tint = WHITE;
+    data->shouldBeInSpatialGrid = true;
     auto bullet = entityManager->addEntity<Bullet>(data);
     std::uniform_real_distribution<float> dist(-20, 20);
     bullet->setTargetRotation(dist(generator) * DEG2RAD + angle);
     bullet->setOffset(dist(generator));
-    //bullet->setDirection(Vector2Normalize(getDirection(entityData->position, GetScreenToWorld2D(GetMousePosition(), *camera->getCamera()))) + fromAngle(dist(generator)));
     bullet->setSpeed(150.0f + dist(generator));
   }
 }
