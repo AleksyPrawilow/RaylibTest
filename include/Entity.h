@@ -20,6 +20,8 @@ public:
   Entity();
   Entity(EntityManager * p_manager, structures::EntityData * p_data);
   virtual ~Entity();
+  void init();
+  virtual void ready();
   Texture2D getTexture() const;
   Rectangle getSrcRect() const;
   Rectangle getDstRect() const;
@@ -37,6 +39,7 @@ public:
   void addEntity(structures::EntityData * data) const;
   void queueFree() const;
   void setId(int p_id);
+  void setPosition(const Vector2 &p_position) const;
   int getId() const;
   void moveAndSlide(Vector2 &velocity, float scalar) const;
   virtual void update(float delta);

@@ -10,6 +10,19 @@ Entity::~Entity()
   delete entityData;
 }
 
+void Entity::init()
+{
+  if (entityData->shouldBeInSpatialGrid)
+  {
+    entityManager->initEntityCell(id, entityData->position);
+  }
+  ready();
+}
+
+void Entity::ready()
+{
+}
+
 Entity::Entity(EntityManager * p_manager, structures::EntityData * p_data)
 {
   entityManager = p_manager;
@@ -139,6 +152,14 @@ void Entity::setId(const int p_id)
   id = p_id;
 }
 
+void Entity::setPosition(const Vector2 &p_position) const
+{
+  entityManager->updateEntityCell(id, entityData->position, p_position);
+  entityData->position = p_position;
+  entityData->dstRect.x = entityData->position.x;
+  entityData->dstRect.y = entityData->position.y;
+}
+
 int Entity::getId() const
 {
   return id;
@@ -151,8 +172,9 @@ void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
   temp.height = 12;
   temp.x = entityData->position.x + velocity.x * scalar - temp.width / 2;
   temp.y = entityData->position.y + velocity.y * scalar - temp.height / 2;
-  for (const auto &collider : *entityManager->getEntities())
+  for (const auto &colliderId : entityManager->getNearbyEntities(entityData->position))
   {
+    Entity * collider = entityManager->getEntityById(colliderId);
     if (!collider->isSolid)
     {
       continue;
@@ -170,10 +192,9 @@ void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
       }
       break;
     }
+    collider = nullptr;
   }
-  entityData->position = entityData->position + velocity * scalar;
-  entityData->dstRect.x = entityData->position.x;
-  entityData->dstRect.y = entityData->position.y;
+  setPosition(entityData->position + velocity * scalar);
 }
 
 void Entity::update(float delta)

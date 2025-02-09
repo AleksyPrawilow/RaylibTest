@@ -20,6 +20,7 @@ namespace structures
     Vector2 position{};
     float rotation{};
     Color tint{};
+    bool shouldBeInSpatialGrid = false;
   };
 
   float angleTo(const Vector2 &vec1, const Vector2 &vec2);
