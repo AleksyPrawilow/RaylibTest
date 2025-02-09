@@ -12,6 +12,7 @@ protected:
   float offset = 0.0f;
   float speed = 5.0f;
   float targetRotation = 0.0f;
+  Vector2 direction;
   DynamicCamera * camera{};
   Texture2D glowTexture{};
   Rectangle glowSrcRect{};

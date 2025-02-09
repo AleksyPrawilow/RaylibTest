@@ -20,6 +20,7 @@ void Bullet::setSpeed(float p_speed)
 void Bullet::setTargetRotation(float p_targetRotation)
 {
   targetRotation = p_targetRotation;
+  direction = fromAngle(targetRotation);
 }
 
 void Bullet::setOffset(float p_offset)
@@ -29,9 +30,21 @@ void Bullet::setOffset(float p_offset)
 
 void Bullet::update(float delta)
 {
-  entityData->position += fromAngle(targetRotation) * speed * delta;
-  entityData->dstRect.x = entityData->position.x;
-  entityData->dstRect.y = entityData->position.y;
+  for (const auto &colliderId : entityManager->getNearbyEntities(entityData->position))
+  {
+    Entity * collider = entityManager->getEntityById(colliderId);
+    if (!collider->isSolid)
+    {
+      continue;
+    }
+    if (CheckCollisionRecs(entityData->dstRect, collider->getDstRect()))
+    {
+      auto normal = getCollisionNormal(entityData->dstRect, collider->getDstRect());
+      direction = Vector2Reflect(direction, normal);
+      break;
+    }
+  }
+  setPosition(entityData->position + direction * speed * delta);
 }
 
 void Bullet::render()
