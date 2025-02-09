@@ -4,7 +4,10 @@
 
 #include "../include/EntityManager.h"
 
-EntityManager::EntityManager()=default;
+EntityManager::EntityManager()
+{
+  grid = new SpatialGrid(this);
+}
 
 EntityManager::~EntityManager()=default;
 
@@ -12,6 +15,7 @@ void EntityManager::processNewEntities()
 {
   for (auto &entity : additionQueue)
   {
+    entity->init();
     entities.push_back(std::move(entity));
   }
   additionQueue.clear();
@@ -111,6 +115,16 @@ DynamicCamera * EntityManager::getDynamicCamera() const
   return camera;
 }
 
+Entity * EntityManager::getEntityById(int id)
+{
+  auto it = entitiesMap.find(id);
+  if (it == entitiesMap.end())
+  {
+    return nullptr;
+  }
+  return entitiesMap[id].get();
+}
+
 void EntityManager::setDynamicCamera(DynamicCamera * p_dynamicCamera)
 {
   camera = p_dynamicCamera;
@@ -119,6 +133,16 @@ void EntityManager::setDynamicCamera(DynamicCamera * p_dynamicCamera)
 float * EntityManager::getCursorRotation() const
 {
   return cursorRotation;
+}
+
+void EntityManager::initEntityCell(int entityId, Vector2 position) const
+{
+  grid->insert(entityId, position);
+}
+
+void EntityManager::updateEntityCell(int entityId, Vector2 oldPosition, Vector2 newPosition) const
+{
+  grid->updateEntity(entityId, oldPosition, newPosition);
 }
 
 void EntityManager::setCursorDstRect(Rectangle * p_cursorDstRect)
@@ -144,4 +168,9 @@ void EntityManager::setCursorRotation(float * p_cursorRotation)
 std::vector<std::shared_ptr<Entity> > *EntityManager::getEntities()
 {
   return &entities;
+}
+
+std::vector<int> EntityManager::getNearbyEntities(Vector2 position) const
+{
+  return grid->getNearbyEntities(position);
 }

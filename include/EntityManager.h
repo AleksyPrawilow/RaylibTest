@@ -7,13 +7,14 @@
 #include <iostream>
 #include <ostream>
 #include <vector>
-
+#include "SpatialGrid.h"
 #include "DynamicCamera.h"
 #include "Structures.h"
 #include "Entity.h"
 
 class Entity;
 class DynamicCamera;
+class SpatialGrid;
 
 class EntityManager
 {
@@ -46,13 +47,17 @@ public:
   Vector2       * getCursorOffset() const;
   Color         * getCursorColor() const;
   DynamicCamera * getDynamicCamera() const;
+  Entity        * getEntityById(int id);
   float         * getCursorRotation() const;
+  void            initEntityCell(int entityId, Vector2 position) const;
+  void            updateEntityCell(int entityId, Vector2 oldPosition, Vector2 newPosition) const;
   void            setCursorDstRect(Rectangle * p_cursorDstRect);
   void            setCursorOffset(Vector2 * p_cursorOffset);
   void            setCursorColor(Color * p_cursorColor);
   void            setCursorRotation(float * p_cursorRotation);
   void            setDynamicCamera(DynamicCamera * p_dynamicCamera);
   std::vector<std::shared_ptr<Entity>> * getEntities();
+  std::vector<int>                       getNearbyEntities(Vector2 position) const;
 
 private:
   Rectangle * cursorDstRect {};
@@ -60,6 +65,7 @@ private:
   Color     * cursorColor   {};
   float     * cursorRotation{};
   DynamicCamera     * camera{};
+  SpatialGrid       * grid  {};
   std::unordered_map<std::string, Texture2D>                            textures;
   std::unordered_map<std::string, Sound>                                sounds;
   std::unordered_map<int, std::shared_ptr<Entity>>                      entitiesMap;
