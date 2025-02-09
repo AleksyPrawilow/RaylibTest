@@ -21,6 +21,8 @@ add_executable(Test src/main.cpp
         src/Wall.cpp
         include/Wall.h
         src/Bullet.cpp
-        include/Bullet.h)
+        include/Bullet.h
+        src/SpatialGrid.cpp
+        include/SpatialGrid.h)
 
 target_link_libraries(Test raylib)
