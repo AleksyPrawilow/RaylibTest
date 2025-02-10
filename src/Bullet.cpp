@@ -26,37 +26,33 @@ void Bullet::setTargetRotation(float p_targetRotation)
 void Bullet::setOffset(float p_offset)
 {
   offset = p_offset;
+  sinElapsedTime += offset;
 }
 
 void Bullet::update(float delta)
 {
-  for (const auto &colliderId : entityManager->getNearbyEntities(SOLID, entityData->position))
-  {
-    Entity * collider = entityManager->getEntityById(colliderId);
-    if (CheckCollisionRecs(entityData->dstRect, collider->getDstRect()))
-    {
-      auto normal = getCollisionNormal(entityData->dstRect, collider->getDstRect());
-      direction = Vector2Reflect(direction, normal);
-      collider = nullptr;
-      break;
-    }
-    collider = nullptr;
-  }
   setPosition(entityData->position + direction * speed * delta);
 }
 
-void Bullet::render()
+void Bullet::render(float delta)
 {
   if (!isOnScreen())
   {
     return;
   }
-  float glowScaleModifier = abs(6 * sin((GetTime() + offset) * 5));
+  sinElapsedTime += delta;
+  float glowScaleModifier = abs(6 * sin(sinElapsedTime * 5));
   glowDstRect.x = entityData->position.x;
   glowDstRect.y = entityData->position.y;
   glowDstRect.width = 6 + glowScaleModifier;
   glowDstRect.height = 6 + glowScaleModifier;
   auto textureOffset = Vector2(3 + glowScaleModifier / 2, 3 + glowScaleModifier / 2);
   DrawTexturePro(glowTexture, glowSrcRect,  glowDstRect, textureOffset, 0.0f, WHITE);
-  Entity::render();
+  Entity::render(delta);
+}
+
+void Bullet::collidedWithWall(Rectangle &rec)
+{
+  auto normal = getCollisionNormal(entityData->dstRect, rec);
+  direction = Vector2Reflect(direction, normal);
 }

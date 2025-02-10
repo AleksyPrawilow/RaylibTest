@@ -12,6 +12,7 @@ protected:
   float offset = 0.0f;
   float speed = 5.0f;
   float targetRotation = 0.0f;
+  float sinElapsedTime = 0.0f;
   Vector2 direction;
   DynamicCamera * camera{};
   Texture2D glowTexture{};
@@ -24,7 +25,8 @@ public:
   void setTargetRotation(float p_targetRotation);
   void setOffset(float p_offset);
   void update(float delta) override;
-  void render() override;
+  void render(float delta) override;
+  void collidedWithWall(Rectangle &rec) override;
 };
 
 
