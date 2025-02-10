@@ -45,6 +45,16 @@ public:
   virtual void update(float delta);
 
   bool isSolid{false};
+  /*The number of collision layers should not exceed 10, if it does,
+   don't forget to change the array size in SpatialGrid.h */
+  enum COLLISION_LAYERS
+  {
+    SOLID,
+    PLAYER,
+    ENEMY,
+    BULLET
+  };
+  COLLISION_LAYERS collisionLayer{SOLID};
 private:
   int id{};
 };

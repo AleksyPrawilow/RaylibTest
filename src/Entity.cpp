@@ -14,7 +14,7 @@ void Entity::init()
 {
   if (entityData->shouldBeInSpatialGrid)
   {
-    entityManager->initEntityCell(id, entityData->position);
+    entityManager->initEntityCell(collisionLayer, id, entityData->position);
   }
   ready();
 }
@@ -154,7 +154,7 @@ void Entity::setId(const int p_id)
 
 void Entity::setPosition(const Vector2 &p_position) const
 {
-  entityManager->updateEntityCell(id, entityData->position, p_position);
+  entityManager->updateEntityCell(collisionLayer, id, entityData->position, p_position);
   entityData->position = p_position;
   entityData->dstRect.x = entityData->position.x;
   entityData->dstRect.y = entityData->position.y;
@@ -172,13 +172,9 @@ void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
   temp.height = 12;
   temp.x = entityData->position.x + velocity.x * scalar - temp.width / 2;
   temp.y = entityData->position.y + velocity.y * scalar - temp.height / 2;
-  for (const auto &colliderId : entityManager->getNearbyEntities(entityData->position))
+  for (const auto &colliderId : entityManager->getNearbyEntities(SOLID, entityData->position))
   {
     Entity * collider = entityManager->getEntityById(colliderId);
-    if (!collider->isSolid)
-    {
-      continue;
-    }
     if (CheckCollisionRecs(temp, collider->getDstRect()))
     {
       auto normal = getCollisionNormal(temp, collider->getDstRect());
@@ -190,6 +186,7 @@ void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
       {
         velocity = Vector2Zero();
       }
+      collider = nullptr;
       break;
     }
     collider = nullptr;
