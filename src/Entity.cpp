@@ -14,7 +14,7 @@ void Entity::init()
 {
   if (entityData->shouldBeInSpatialGrid)
   {
-    entityManager->initEntityCell(collisionLayer, id, entityData->position);
+    entityManager->initEntityCell(collisionLayer, this, entityData->position);
   }
   ready();
 }
@@ -122,12 +122,12 @@ structures::EntityData * Entity::getEntityData() const
   return entityData;
 }
 
-void Entity::render()
+void Entity::render(float delta)
 {
   DrawTexturePro(getTexture(), getSrcRect(), getDstRect(), getTextureOffset(), getRotation(), getTint());
 }
 
-bool Entity::isOnScreen()
+bool Entity::isOnScreen() const
 {
   Vector2 screenPos = GetWorldToScreen2D(entityData->position, *entityManager->getDynamicCamera()->getCamera());
   if (screenPos.x < -200 || screenPos.x > 1480 || screenPos.y < -200  || screenPos.y > 920)
@@ -152,9 +152,9 @@ void Entity::setId(const int p_id)
   id = p_id;
 }
 
-void Entity::setPosition(const Vector2 &p_position) const
+void Entity::setPosition(Vector2 p_position)
 {
-  entityManager->updateEntityCell(collisionLayer, id, entityData->position, p_position);
+  entityManager->updateEntityCell(collisionLayer, this, entityData->position, p_position);
   entityData->position = p_position;
   entityData->dstRect.x = entityData->position.x;
   entityData->dstRect.y = entityData->position.y;
@@ -165,16 +165,15 @@ int Entity::getId() const
   return id;
 }
 
-void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
+void Entity::moveAndSlide(Vector2 &velocity, float scalar)
 {
   Rectangle temp = entityData->dstRect;
   temp.width = 8;
   temp.height = 12;
   temp.x = entityData->position.x + velocity.x * scalar - temp.width / 2;
   temp.y = entityData->position.y + velocity.y * scalar - temp.height / 2;
-  for (const auto &colliderId : entityManager->getNearbyEntities(SOLID, entityData->position))
+  for (const auto &collider : entityManager->getNearbyEntities(SOLID, entityData->position))
   {
-    Entity * collider = entityManager->getEntityById(colliderId);
     if (CheckCollisionRecs(temp, collider->getDstRect()))
     {
       auto normal = getCollisionNormal(temp, collider->getDstRect());
@@ -186,14 +185,16 @@ void Entity::moveAndSlide(Vector2 &velocity, float scalar) const
       {
         velocity = Vector2Zero();
       }
-      collider = nullptr;
       break;
     }
-    collider = nullptr;
   }
   setPosition(entityData->position + velocity * scalar);
 }
 
 void Entity::update(float delta)
+{
+}
+
+void Entity::collidedWithWall(Rectangle &rec)
 {
 }

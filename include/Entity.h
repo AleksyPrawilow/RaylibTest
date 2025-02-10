@@ -34,15 +34,16 @@ public:
   float getRotation() const;
   Color getTint() const;
   structures::EntityData * getEntityData() const;
-  virtual void render();
-  bool isOnScreen();
+  virtual void render(float delta);
+  bool isOnScreen() const;
   void addEntity(structures::EntityData * data) const;
   void queueFree() const;
   void setId(int p_id);
-  void setPosition(const Vector2 &p_position) const;
+  void setPosition(Vector2 p_position);
   int getId() const;
-  void moveAndSlide(Vector2 &velocity, float scalar) const;
+  void moveAndSlide(Vector2 &velocity, float scalar);
   virtual void update(float delta);
+  virtual void collidedWithWall(Rectangle &rec);
 
   bool isSolid{false};
   /*The number of collision layers should not exceed 10, if it does,
