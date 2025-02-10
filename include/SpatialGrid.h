@@ -8,6 +8,7 @@
 #include <vector>
 #include <unordered_map>
 #include "EntityManager.h"
+#include "Entity.h"
 
 class EntityManager;
 
@@ -16,15 +17,16 @@ class SpatialGrid
 public:
   explicit SpatialGrid(EntityManager * p_manager);
   ~SpatialGrid();
-  //TODO implement collision layers to improve performance
-  std::string getCell(Vector2 position) const;
-  std::vector<int> getNearbyEntities(Vector2 position) const;
-  void insert(int entityId, Vector2 position);
-  void remove(int entityId, Vector2 position);
-  void updateEntity(int entityId, Vector2 oldPosition, Vector2 newPosition);
+
+  static size_t hashCell(int x, int y);
+  size_t getCell(Vector2 position);
+  std::vector<int> getNearbyEntities(int collisionLayer, Vector2 position) const;
+  void insert(int collisionLayer, int entityId, Vector2 position);
+  void remove(int collisionLayer, int entityId, Vector2 position);
+  void updateEntity(int collisionLayer, int entityId, Vector2 oldPosition, Vector2 newPosition);
 private:
   //Cells are accessed by coordinates key and contain entities near that position
-  std::unordered_map<std::string, std::vector<int>> cellMap;
+  std::unordered_map<size_t, std::vector<int>> cellMap[10];
   EntityManager * entityManager;
   int cellSize = 48;
 };

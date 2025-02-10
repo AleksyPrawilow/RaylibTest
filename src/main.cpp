@@ -41,8 +41,8 @@ int main()
   auto * data         = new structures::EntityData();
   data->texture       = *entityManager.getTexture("../res/Astronaut.png");
   data->srcRect       = Rectangle(0, 0, 12, 12);
-  data->dstRect       = Rectangle(0, 0, 12, 12);
-  data->position      = Vector2(0, 0);
+  data->dstRect       = Rectangle(150, 150, 12, 12);
+  data->position      = Vector2(150, 150);
   data->textureOrigin = Vector2(6, 6);
   data->rotation      = 0.0f;
   data->tint          = WHITE;
@@ -54,6 +54,7 @@ int main()
   entityManager.setDynamicCamera(dynamicCamera);
   camera->target = player->getEntityData()->position;
   camera->zoom = 7.0f;
+  player->collisionLayer = Entity::PLAYER;
   player->setCamera(dynamicCamera);
 
   while (!WindowShouldClose())
@@ -130,6 +131,7 @@ void createLevel(EntityManager * entity_manager)
           data->texture = *entity_manager->getTexture("../res/Wall.png");
           wall = entity_manager->addEntity<Wall>(data);
           wall->isSolid = true;
+          wall->collisionLayer = Entity::SOLID;
           break;
         default:
           data = new structures::EntityData();
