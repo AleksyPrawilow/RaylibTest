@@ -135,14 +135,14 @@ float * EntityManager::getCursorRotation() const
   return cursorRotation;
 }
 
-void EntityManager::initEntityCell(int entityId, Vector2 position) const
+void EntityManager::initEntityCell(int collisionLayer, int entityId, Vector2 position) const
 {
-  grid->insert(entityId, position);
+  grid->insert(collisionLayer, entityId, position);
 }
 
-void EntityManager::updateEntityCell(int entityId, Vector2 oldPosition, Vector2 newPosition) const
+void EntityManager::updateEntityCell(int collisionLayer, int entityId, Vector2 oldPosition, Vector2 newPosition) const
 {
-  grid->updateEntity(entityId, oldPosition, newPosition);
+  grid->updateEntity(collisionLayer, entityId, oldPosition, newPosition);
 }
 
 void EntityManager::setCursorDstRect(Rectangle * p_cursorDstRect)
@@ -170,7 +170,7 @@ std::vector<std::shared_ptr<Entity> > *EntityManager::getEntities()
   return &entities;
 }
 
-std::vector<int> EntityManager::getNearbyEntities(Vector2 position) const
+std::vector<int> EntityManager::getNearbyEntities(int collisionLayer, Vector2 position) const
 {
-  return grid->getNearbyEntities(position);
+  return grid->getNearbyEntities(collisionLayer, position);
 }

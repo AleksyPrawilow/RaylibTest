@@ -83,6 +83,7 @@ void Gun::shoot()
     data->shouldBeInSpatialGrid = true;
     auto bullet = entityManager->addEntity<Bullet>(data);
     std::uniform_real_distribution<float> dist(-20, 20);
+    bullet->collisionLayer = BULLET;
     bullet->setTargetRotation(dist(generator) * DEG2RAD + angle);
     bullet->setOffset(dist(generator));
     bullet->setSpeed(150.0f + dist(generator));
