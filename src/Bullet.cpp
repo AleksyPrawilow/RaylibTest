@@ -30,19 +30,17 @@ void Bullet::setOffset(float p_offset)
 
 void Bullet::update(float delta)
 {
-  for (const auto &colliderId : entityManager->getNearbyEntities(entityData->position))
+  for (const auto &colliderId : entityManager->getNearbyEntities(SOLID, entityData->position))
   {
     Entity * collider = entityManager->getEntityById(colliderId);
-    if (!collider->isSolid)
-    {
-      continue;
-    }
     if (CheckCollisionRecs(entityData->dstRect, collider->getDstRect()))
     {
       auto normal = getCollisionNormal(entityData->dstRect, collider->getDstRect());
       direction = Vector2Reflect(direction, normal);
+      collider = nullptr;
       break;
     }
+    collider = nullptr;
   }
   setPosition(entityData->position + direction * speed * delta);
 }
