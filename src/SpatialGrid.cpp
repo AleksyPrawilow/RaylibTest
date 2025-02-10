@@ -23,11 +23,11 @@ size_t SpatialGrid::getCell(Vector2 position)
   return hashCell(cellX, cellY);
 }
 
-std::vector<int> SpatialGrid::getNearbyEntities(int collisionLayer, Vector2 position) const
+std::vector<Entity *> SpatialGrid::getNearbyEntities(int collisionLayer, Vector2 position) const
 {
   const int cellX = static_cast<int>(position.x) / cellSize;
   const int cellY = static_cast<int>(position.y) / cellSize;
-  std::vector<int> result;
+  std::vector<Entity *> result;
   result.reserve(32);  //Preallocate memory to reduce resizing. Don't know if it helps though, we did it in class one time and it kinda worked.
   auto &layerMap = cellMap[collisionLayer];
 
@@ -46,25 +46,25 @@ std::vector<int> SpatialGrid::getNearbyEntities(int collisionLayer, Vector2 posi
   return result;
 }
 
-void SpatialGrid::insert(int collisionLayer, int entityId, Vector2 position)
+void SpatialGrid::insert(int collisionLayer, Entity * entity, Vector2 position)
 {
-  cellMap[collisionLayer][getCell(position)].push_back(entityId);
+  cellMap[collisionLayer][getCell(position)].push_back(entity);
 }
 
-void SpatialGrid::remove(int collisionLayer, int entityId, Vector2 position)
+void SpatialGrid::remove(int collisionLayer, Entity * entity, Vector2 position)
 {
   size_t key = getCell(position);
   auto &cell = cellMap[collisionLayer][key];
-  cell.erase(std::remove(cell.begin(), cell.end(), entityId), cell.end());
+  cell.erase(std::remove(cell.begin(), cell.end(), entity), cell.end());
 }
 
-void SpatialGrid::updateEntity(int collisionLayer, int entityId, Vector2 oldPosition, Vector2 newPosition)
+void SpatialGrid::updateEntity(int collisionLayer, Entity * entity, Vector2 oldPosition, Vector2 newPosition)
 {
   const size_t oldKey = getCell(oldPosition);
   const size_t newKey = getCell(newPosition);
   if (oldKey != newKey)
   {
-    remove(collisionLayer, entityId, oldPosition);
-    insert(collisionLayer, entityId, newPosition);
+    remove(collisionLayer, entity, oldPosition);
+    insert(collisionLayer, entity, newPosition);
   }
 }

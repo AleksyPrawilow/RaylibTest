@@ -7,6 +7,7 @@
 EntityManager::EntityManager()
 {
   grid = new SpatialGrid(this);
+  entitiesMap.reserve(2000); //Suppose that's an average entity count idk
 }
 
 EntityManager::~EntityManager()=default;
@@ -117,11 +118,6 @@ DynamicCamera * EntityManager::getDynamicCamera() const
 
 Entity * EntityManager::getEntityById(int id)
 {
-  auto it = entitiesMap.find(id);
-  if (it == entitiesMap.end())
-  {
-    return nullptr;
-  }
   return entitiesMap[id].get();
 }
 
@@ -135,14 +131,14 @@ float * EntityManager::getCursorRotation() const
   return cursorRotation;
 }
 
-void EntityManager::initEntityCell(int collisionLayer, int entityId, Vector2 position) const
+void EntityManager::initEntityCell(int collisionLayer, Entity * entity, Vector2 position) const
 {
-  grid->insert(collisionLayer, entityId, position);
+  grid->insert(collisionLayer, entity, position);
 }
 
-void EntityManager::updateEntityCell(int collisionLayer, int entityId, Vector2 oldPosition, Vector2 newPosition) const
+void EntityManager::updateEntityCell(int collisionLayer, Entity * entity, Vector2 oldPosition, Vector2 newPosition) const
 {
-  grid->updateEntity(collisionLayer, entityId, oldPosition, newPosition);
+  grid->updateEntity(collisionLayer, entity, oldPosition, newPosition);
 }
 
 void EntityManager::setCursorDstRect(Rectangle * p_cursorDstRect)
@@ -170,7 +166,7 @@ std::vector<std::shared_ptr<Entity> > *EntityManager::getEntities()
   return &entities;
 }
 
-std::vector<int> EntityManager::getNearbyEntities(int collisionLayer, Vector2 position) const
+std::vector<Entity *> EntityManager::getNearbyEntities(int collisionLayer, Vector2 position) const
 {
   return grid->getNearbyEntities(collisionLayer, position);
 }

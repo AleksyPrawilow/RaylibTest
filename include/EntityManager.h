@@ -49,15 +49,15 @@ public:
   DynamicCamera * getDynamicCamera() const;
   Entity        * getEntityById(int id);
   float         * getCursorRotation() const;
-  void            initEntityCell(int collisionLayer, int entityId, Vector2 position) const;
-  void            updateEntityCell(int collisionLayer, int entityId, Vector2 oldPosition, Vector2 newPosition) const;
+  void            initEntityCell(int collisionLayer, Entity *entity, Vector2 position) const;
+  void            updateEntityCell(int collisionLayer, Entity *entity, Vector2 oldPosition, Vector2 newPosition) const;
   void            setCursorDstRect(Rectangle * p_cursorDstRect);
   void            setCursorOffset(Vector2 * p_cursorOffset);
   void            setCursorColor(Color * p_cursorColor);
   void            setCursorRotation(float * p_cursorRotation);
   void            setDynamicCamera(DynamicCamera * p_dynamicCamera);
   std::vector<std::shared_ptr<Entity>> * getEntities();
-  std::vector<int>                       getNearbyEntities(int collisionLayer, Vector2 position) const;
+  std::vector<Entity *>                  getNearbyEntities(int collisionLayer, Vector2 position) const;
 
 private:
   Rectangle * cursorDstRect {};
