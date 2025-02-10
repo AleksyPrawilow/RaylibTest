@@ -59,7 +59,8 @@ int main()
 
   while (!WindowShouldClose())
   {
-    dynamicCamera->update(GetFrameTime());
+    float deltaTime = GetFrameTime();
+    dynamicCamera->update(deltaTime);
     UpdateMusicStream(music);
     if (IsKeyPressed(KEY_F1))
     {
@@ -70,8 +71,8 @@ int main()
     BeginMode2D(*camera);
     for (const auto &entity : *entityManager.getEntities())
     {
-      entity->update(GetFrameTime());
-      entity->render();
+      entity->update(deltaTime);
+      entity->render(deltaTime);
     }
     EndMode2D();
     DrawFPS(10, 10);
