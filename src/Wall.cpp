@@ -9,10 +9,25 @@ void Wall::changeState()
 
 }
 
-void Wall::render()
+void Wall::render(float delta)
 {
   if (isOnScreen())
   {
-    Entity::render();
+    Entity::render(delta);
+  }
+}
+
+void Wall::update(float delta)
+{
+  if (!isSolid)
+  {
+    return;
+  }
+  for (auto &collider : entityManager->getNearbyEntities(BULLET, getPosition()))
+  {
+    if (CheckCollisionRecs(getDstRect(), collider->getDstRect()))
+    {
+      collider->collidedWithWall(entityData->dstRect);
+    }
   }
 }
