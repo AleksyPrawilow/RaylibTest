@@ -1,4 +1,4 @@
-# RaylibTest
+# Grail
 
 ***
-This is my first time trying to make something resembling a game without a game engine.
+This is going to be a roguelite game. The objective is to survive multiple waves of enemies using different guns and modifiers so that eventually you can reach the ultimate artifact: Grail.
